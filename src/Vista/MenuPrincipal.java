@@ -96,7 +96,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 salirMenuPActionPerformed(evt);
             }
         });
-        principal.add(salirMenuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 60, 100, 40));
+        principal.add(salirMenuP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 50, 100, 40));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/panaderia (1) (1).png"))); // NOI18N
         principal.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 100));
@@ -113,7 +113,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("ADMINISTRADOR");
-        principal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 10, -1, -1));
+        principal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 10, -1, 30));
 
         getContentPane().add(principal, java.awt.BorderLayout.PAGE_START);
 
