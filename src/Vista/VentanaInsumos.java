@@ -1,0 +1,1172 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package Vista;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import Controlador.Conexion;
+import static Vista.VentanaInsumos1.setFilter;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
+/**
+ *
+ * @author nfswo
+ */
+public class VentanaInsumos extends javax.swing.JFrame {
+
+    public Conexion conexi = new Conexion();
+    public PreparedStatement ps, ps1;
+    public ResultSet rs;
+    public DefaultTableModel dft;
+    int contador;
+    int resultado;
+    boolean seCumple;
+    String idInsumo;
+    String obtenerValor;
+
+    ArrayList<String> InsumosRegistrados = new ArrayList();
+
+    /**
+     * Creates new form VentanaInsumos
+     */
+    public VentanaInsumos() {
+        initComponents();
+        this.setLocation(370, 140);
+        //this.setAlwaysOnTop(true);
+        mostrarTabla();
+        seleccionarTabla();
+
+    }
+
+    public String getObtenerValor() {
+        return obtenerValor;
+    }
+
+    public void setObtenerValor(String obtenerValor) {
+        this.obtenerValor = obtenerValor;
+    }
+
+    public void mostrarTabla() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        rs = Conexion.getTabla("select *from insumo");
+        //se asignan los nombre de la columna
+        modelo.setColumnIdentifiers(new Object[]{
+            "Id", "Proveedor", "Nombre", "Descripcion", "Cantidad", "Precio/u", "Medida"
+        });
+
+        try {
+            while (rs.next()) {
+                modelo.addRow(new Object[]{
+                    rs.getString("id_insumo"),
+                    rs.getString("nombre_proveedor"),
+                    rs.getString("nombre_insumo"),
+                    rs.getString("descripcion"),
+                    rs.getString("cantidad_existencia"),
+                    rs.getString("precio_unidad"),
+                    rs.getString("unidad_medida")
+                });
+
+            }
+            tablaInsumos.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        //seleccionarTabla();
+    }
+
+    public String getIdInsumo() {
+        return idInsumo;
+    }
+
+    public void setIdInsumo(String idInsumo) {
+        this.idInsumo = idInsumo;
+    }
+
+    public void limpiar() {
+        cId.setText("");
+        comboBuscar.setSelectedItem(null);
+        buscador.setSelectedItem(null);
+        cBuscar.setText("");
+        cNombre.setText("");
+        cDescripcion.setText("");
+        cCantidad.setText("");
+        cPrecio.setText("");
+        comboMedida.setSelectedItem(null);
+        tablaInsumos.setRowSelectionAllowed(false);
+        botonRegistrar.setEnabled(true);
+        mostrarTabla();
+
+    }
+
+    private void seleccionarTabla() {
+        tablaInsumos.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                limpiar();
+                int row = tablaInsumos.rowAtPoint(e.getPoint());
+                cId.setText(tablaInsumos.getValueAt(row, 0).toString());
+                setIdInsumo(tablaInsumos.getValueAt(row, 0).toString());
+                comboBuscar.setSelectedItem(tablaInsumos.getValueAt(row, 1).toString());
+                cNombre.setText(tablaInsumos.getValueAt(row, 2).toString());
+                cDescripcion.setText(tablaInsumos.getValueAt(row, 3).toString());
+                cCantidad.setText(tablaInsumos.getValueAt(row, 4).toString());
+                cPrecio.setText(tablaInsumos.getValueAt(row, 5).toString());
+                comboMedida.setSelectedItem(tablaInsumos.getValueAt(row, 6).toString());
+                setObtenerValor(tablaInsumos.getValueAt(row, 6).toString());
+                botonRegistrar.setEnabled(false);
+
+            }
+        });
+
+    }
+
+    public void mostrarComboProv() {
+        try {
+            rs = Conexion.getTabla("select *from proveedor");
+            while (rs.next()) {
+                comboBuscar.addItem(rs.getString("nombre"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(VentanaInsumos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jSlider1 = new javax.swing.JSlider();
+        jPanel1 = new javax.swing.JPanel();
+        botonSalir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaInsumos = new javax.swing.JTable();
+        bEliminar = new javax.swing.JButton();
+        botonRegistrar = new javax.swing.JButton();
+        bActualizar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cNombre = new javax.swing.JTextField();
+        cCantidad = new javax.swing.JTextField();
+        cDescripcion = new javax.swing.JTextField();
+        cPrecio = new javax.swing.JTextField();
+        bLimpiar = new javax.swing.JButton();
+        cId = new javax.swing.JTextField();
+        comboBuscar = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        comboMedida = new javax.swing.JComboBox<>();
+        botonBuscar = new javax.swing.JButton();
+        buscador = new javax.swing.JComboBox<>();
+        cBuscar = new javax.swing.JTextField();
+        bUtilizar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(236, 226, 198));
+
+        botonSalir.setBackground(new java.awt.Color(112, 80, 48));
+        botonSalir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        botonSalir.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalir.setText("Salir");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setToolTipText("");
+
+        tablaInsumos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaInsumos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tablaInsumos.setAutoscrolls(false);
+        tablaInsumos.setRowSelectionAllowed(false);
+        tablaInsumos.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(tablaInsumos);
+
+        bEliminar.setBackground(new java.awt.Color(112, 80, 48));
+        bEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        bEliminar.setText("Eliminar");
+        bEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEliminarActionPerformed(evt);
+            }
+        });
+
+        botonRegistrar.setBackground(new java.awt.Color(112, 80, 48));
+        botonRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        botonRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        botonRegistrar.setText("Registrar");
+        botonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarActionPerformed(evt);
+            }
+        });
+
+        bActualizar.setBackground(new java.awt.Color(112, 80, 48));
+        bActualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        bActualizar.setText("Actualizar");
+        bActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bActualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/panaderoVentana.png"))); // NOI18N
+        jLabel1.setText("Insumos");
+
+        jLabel2.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Proveedor:");
+
+        jLabel3.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Id:");
+
+        jLabel5.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Nombre:");
+
+        cNombre.setEditable(true);
+        cNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cNombre.setBorder(null);
+        cNombre.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cNombreMouseMoved(evt);
+            }
+        });
+        cNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cNombreActionPerformed(evt);
+            }
+        });
+        cNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cNombreKeyTyped(evt);
+            }
+        });
+
+        cCantidad.setEditable(true);
+        cCantidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cCantidad.setBorder(null);
+        cCantidad.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cCantidadMouseMoved(evt);
+            }
+        });
+        cCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cCantidadActionPerformed(evt);
+            }
+        });
+        cCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cCantidadKeyTyped(evt);
+            }
+        });
+
+        cDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cDescripcion.setBorder(null);
+        cDescripcion.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cDescripcionMouseMoved(evt);
+            }
+        });
+        cDescripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cDescripcionActionPerformed(evt);
+            }
+        });
+        cDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cDescripcionKeyTyped(evt);
+            }
+        });
+
+        cPrecio.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cPrecio.setBorder(null);
+        cPrecio.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                cPrecioMouseMoved(evt);
+            }
+        });
+        cPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cPrecioActionPerformed(evt);
+            }
+        });
+        cPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cPrecioKeyTyped(evt);
+            }
+        });
+
+        bLimpiar.setBackground(new java.awt.Color(112, 80, 48));
+        bLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        bLimpiar.setText("Limpiar");
+        bLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimpiarActionPerformed(evt);
+            }
+        });
+
+        cId.setEditable(false);
+        cId.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cId.setBorder(null);
+        cId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cIdActionPerformed(evt);
+            }
+        });
+
+        comboBuscar.setBorder(null);
+        comboBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setText("Cantidad:");
+
+        jLabel8.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel8.setText("Descripción:");
+
+        jLabel9.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel9.setText("Precio: $");
+
+        jLabel10.setFont(new java.awt.Font("Sitka Banner", 1, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText("Unidad de Medida:");
+
+        comboMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kilogramo(kg)", "Gramo(gr)", "Litro(L)", "MiIilitro(ml)", "Pieza(Pz)" }));
+        comboMedida.setBorder(null);
+        comboMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMedidaActionPerformed(evt);
+            }
+        });
+
+        botonBuscar.setBackground(new java.awt.Color(112, 80, 48));
+        botonBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        botonBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
+
+        buscador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "Cantidad", "Precio" }));
+        buscador.setSelectedItem(null);
+        buscador.setBorder(null);
+        buscador.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                buscadorItemStateChanged(evt);
+            }
+        });
+        buscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscadorActionPerformed(evt);
+            }
+        });
+
+        cBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cBuscar.setBorder(null);
+        cBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBuscarActionPerformed(evt);
+            }
+        });
+        cBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cBuscarKeyTyped(evt);
+            }
+        });
+
+        bUtilizar.setBackground(new java.awt.Color(112, 80, 48));
+        bUtilizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bUtilizar.setForeground(new java.awt.Color(255, 255, 255));
+        bUtilizar.setText("Utilizar");
+        bUtilizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bUtilizarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(264, 264, 264)
+                .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(botonRegistrar)
+                        .addGap(35, 35, 35)
+                        .addComponent(bActualizar)
+                        .addGap(39, 39, 39)
+                        .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(bUtilizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cId, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(comboMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(cPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(cCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(cDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(cNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 28, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel3))
+                            .addComponent(cId, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel2))
+                            .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel5))
+                            .addComponent(cNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel8))
+                            .addComponent(cDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel7))
+                            .addComponent(cCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel9))
+                            .addComponent(cPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel10))
+                            .addComponent(comboMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel1))
+                            .addComponent(botonSalir))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bUtilizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+
+        cId.setEditable(false);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 558));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_botonSalirActionPerformed
+
+
+    private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
+        // TODO add your handling code here:
+
+        int option = JOptionPane.showConfirmDialog(null, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            try {
+                Conexion con = new Conexion();
+                Connection conexion = con.getConnection();
+                ps = conexion.prepareStatement("delete from insumo where id_insumo=?");
+                ps.setString(1, cId.getText());
+                int resultado = ps.executeUpdate();
+                if (resultado > 0) {
+                    JOptionPane.showMessageDialog(null, "Eliminacion correcta");
+                    mostrarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se realizo la eliminación de los datos");
+                }
+                conexion.close();
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+            limpiar();
+            tablaInsumos.setRowSelectionAllowed(false);
+            botonRegistrar.setEnabled(true);
+        } else {
+            System.out.println("El usuario seleccionó 'No'.");
+        }
+    }//GEN-LAST:event_bEliminarActionPerformed
+
+    public void llenarLista() throws SQLException {
+
+        String sql = "select * from insumo";
+        ps = conexi.getConnection().prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String id_insumo = rs.getString(1);
+            InsumosRegistrados.add(id_insumo);
+        }
+    }
+
+    public int validar(String n) {
+        for (int i = 0; i < InsumosRegistrados.size(); i++) {
+            if (InsumosRegistrados.get(i).equalsIgnoreCase(n)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
+        // TODO add your handling code here:
+
+//        int option = JOptionPane.showConfirmDialog(null, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+//
+//        if (option == JOptionPane.YES_OPTION) {
+        if (cNombre.getText().isEmpty() || cDescripcion.getText().isEmpty() || cCantidad.getText().isEmpty() || cPrecio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Existe Algun Campo Vacío", "Error!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                    Connection conexion = null;
+                    int resultado = 0;
+                    boolean yaRegistrado;
+                    conexion = conexi.getConnection();
+                    ps = conexion.prepareStatement("insert into insumo (nombre_proveedor,nombre_insumo,descripcion,cantidad_existencia,precio_unidad,unidad_medida)values(?,?,?,?,?,?)");
+                    //ps.setString(1, cId.getSelectedItem().toString());
+                    ps.setString(1, comboBuscar.getSelectedItem().toString());
+                    ps.setString(2, cNombre.getText());
+                    ps.setString(3, cDescripcion.getText());
+                    ps.setString(4, cCantidad.getText());
+                    ps.setString(5, cPrecio.getText());
+                    ps.setString(6, comboMedida.getSelectedItem().toString());
+
+                    resultado = ps.executeUpdate(); //ejecutamos la inserccion
+                    System.out.println(InsumosRegistrados.toString());
+                    if ((resultado > 0)) {
+                        JOptionPane.showMessageDialog(null, "Datos ingresados correctamente");
+                        limpiar();
+                        mostrarTabla();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Verifique que los datos sean correctos");
+
+                    }
+                    conexion.close();
+                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Verifique los datos");
+                System.out.println(ex);
+            }
+            tablaInsumos.setRowSelectionAllowed(false);
+            botonRegistrar.setEnabled(true);
+        }
+    }//GEN-LAST:event_botonRegistrarActionPerformed
+
+    private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
+        // TODO add your handling code here:
+
+        int option = JOptionPane.showConfirmDialog(null, "¿Deseas continuar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            resultado = 0;
+            try {
+                Conexion con = new Conexion();
+                Connection conexion = con.getConnection();
+                ps = conexion.prepareStatement("update insumo set nombre_proveedor=?,nombre_insumo=?,descripcion=?,cantidad_existencia=?,precio_unidad=?, unidad_medida=? where id_insumo=?");
+
+                ps.setString(1, comboBuscar.getSelectedItem().toString());
+                ps.setString(2, cNombre.getText());
+                ps.setString(3, cDescripcion.getText());
+                ps.setString(4, cCantidad.getText());
+                ps.setString(5, cPrecio.getText());
+                ps.setString(6, comboMedida.getSelectedItem().toString());
+                ps.setString(7, cId.getText());
+                resultado = ps.executeUpdate();
+
+                if ((resultado > 0)) {
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No fue posible actualizar los datos");
+                }
+                conexion.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Verifique los datos");
+            }
+            mostrarTabla();
+            limpiar();
+            tablaInsumos.setRowSelectionAllowed(false);
+            botonRegistrar.setEnabled(true);
+        } else {
+
+        }
+    }//GEN-LAST:event_bActualizarActionPerformed
+
+    private void cNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cNombreActionPerformed
+
+    private void bLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+    }//GEN-LAST:event_bLimpiarActionPerformed
+
+    private void cIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cIdActionPerformed
+
+    private void cPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cPrecioActionPerformed
+
+    private void cDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cDescripcionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cDescripcionActionPerformed
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // TODO add your handling code here:
+        //aca buscar
+
+        DefaultTableModel modelo1 = new DefaultTableModel();
+        Connection conexion = null;
+        modelo1.setColumnIdentifiers(new Object[]{
+            "Id", "Proveedor", "Nombre", "Descripcion", "Existencias", "Precio/u", "Medida"
+        });
+        String donde = buscador.getSelectedItem().toString();
+        switch (donde) {
+            case "id":
+                try {
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where id_insumo=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            break;
+
+            case "Proveedor":
+//                
+                try {
+                JOptionPane.showMessageDialog(rootPane, "Entre a proveedor");
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where nombre_proveedor=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+
+            break;
+
+            case "Nombre":
+                try {
+                JOptionPane.showMessageDialog(rootPane, "Entre a nombre");
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where nombre_insumo=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            break;
+
+            case "Descripción":
+                try {
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where descripcion=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            break;
+
+            case "Cantidad":
+                try {
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where cantidad_existencia=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            break;
+
+            case "Precio":
+                try {
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where precio_unidad=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            break;
+
+            case "Unidad de medida":
+                try {
+                conexion = conexi.getConnection();
+                ps = conexion.prepareStatement("select *from insumo where unidad_medida=?");
+                ps.setString(1, cBuscar.getText());
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    modelo1.addRow(new Object[]{
+                        rs.getString("id_insumo"),
+                        rs.getString("nombre_proveedor"),
+                        rs.getString("nombre_insumo"),
+                        rs.getString("descripcion"),
+                        rs.getString("cantidad_existencia"),
+                        rs.getString("precio_unidad"),
+                        rs.getString("unidad_medida")
+                    });
+
+                }
+                tablaInsumos.setModel(modelo1);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            break;
+
+        }
+
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
+    private void comboMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMedidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMedidaActionPerformed
+
+    private void cBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBuscarActionPerformed
+
+    private void comboBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBuscarActionPerformed
+
+    private void buscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscadorActionPerformed
+
+    private void bUtilizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUtilizarActionPerformed
+        // TODO add your handling code here:
+        UtilizarInsumo insumo = new UtilizarInsumo(null, false);
+        insumo.setVisible(true);
+        insumo.setIdInsumo(cId.getText());
+        insumo.setSimboloInsumo(getObtenerValor());
+        insumo.mostrarvalorDeInsumo.setText(getObtenerValor());
+        insumo.setTablaUsuario(tablaInsumos);
+    }//GEN-LAST:event_bUtilizarActionPerformed
+
+    private void cNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cNombreKeyTyped
+        if (cNombre.getText().length() >= 30) {
+            evt.consume();
+        }
+        char key = evt.getKeyChar();
+
+        if (!Character.isLetter(key) && !(key == KeyEvent.VK_SPACE)
+                && !(key == KeyEvent.VK_BACK_SPACE)) {
+            evt.consume();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cNombreKeyTyped
+
+    private void cDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cDescripcionKeyTyped
+        if (cDescripcion.getText().length() >= 30) {
+            evt.consume();
+        }
+        char key = evt.getKeyChar();
+
+        if (Character.isLetter(key) && !Character.isLetter(key) && !(key == KeyEvent.VK_SPACE)
+                && !(key == KeyEvent.VK_BACK_SPACE)) {
+            evt.consume();
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_cDescripcionKeyTyped
+
+    private void cCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cCantidadKeyTyped
+        char key = evt.getKeyChar();
+        if (cCantidad.getText().length() >= 7) {
+            evt.consume();
+        } // TODO add your handling code here:
+
+        if (validateFloat(key)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        try {
+            Double.parseDouble(cCantidad.getText() + key);
+        } catch (NumberFormatException ex) {
+            getToolkit().beep();
+            evt.consume();
+        }    }//GEN-LAST:event_cCantidadKeyTyped
+
+    private void cPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cPrecioKeyTyped
+        char key = evt.getKeyChar();
+        if (cPrecio.getText().length() >= 5) {
+            evt.consume();
+        } // TODO add your handling code here:
+
+        if (validateFloat(key)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        try {
+            Double.parseDouble(cPrecio.getText() + key);
+        } catch (NumberFormatException ex) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_cPrecioKeyTyped
+
+    private void cBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cBuscarKeyTyped
+        if (cBuscar.getText().length() >= 2) {
+            evt.consume();
+        }
+        char key = evt.getKeyChar();
+
+        if (!Character.isDigit(key)) {
+            evt.consume();
+        }    }//GEN-LAST:event_cBuscarKeyTyped
+
+    private void buscadorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_buscadorItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String item = (String) evt.getItem();
+
+            switch (item) {
+                case "id":
+                    // Solo permite 2 dígitos y solo números
+                    setFilter(cBuscar, "[0-9]*", 2);
+                    break;
+                case "Cantidad":
+                case "Precio":
+                    // Solo permite números, un punto y dos decimales
+                    setFilter(cBuscar, "\\d*(\\.\\d{0,2})?", 5);
+                    break;
+            }
+        }    }//GEN-LAST:event_buscadorItemStateChanged
+
+    private void cCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cCantidadActionPerformed
+
+    private void cNombreMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cNombreMouseMoved
+        // TODO add your handling code here:
+        cNombre.setToolTipText("Campo Obligatorio");
+    }//GEN-LAST:event_cNombreMouseMoved
+
+    private void cDescripcionMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cDescripcionMouseMoved
+        // TODO add your handling code here:
+        cDescripcion.setToolTipText("Campo Obligatorio");
+    }//GEN-LAST:event_cDescripcionMouseMoved
+
+    private void cCantidadMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cCantidadMouseMoved
+        // TODO add your handling code here:
+        cCantidad.setToolTipText("Campo Obligatorio");
+    }//GEN-LAST:event_cCantidadMouseMoved
+
+    private void cPrecioMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cPrecioMouseMoved
+        // TODO add your handling code here:
+        cPrecio.setToolTipText("Campo Obligatorio");
+    }//GEN-LAST:event_cPrecioMouseMoved
+
+    public static void setFilter(JTextField textField, String regex, int maxCharacters) {
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private Pattern pattern = Pattern.compile(regex);
+
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String string = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+
+                if (string.length() <= maxCharacters && pattern.matcher(string).matches()) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+    }
+
+    public boolean validateFloat(char key) {
+        //Método modificado, para que acepte primero un número y después un punto
+        return (Character.isLetter(key) || String.valueOf(key).trim().isEmpty());
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentanaInsumos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentanaInsumos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentanaInsumos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentanaInsumos.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentanaInsumos().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bActualizar;
+    private javax.swing.JButton bEliminar;
+    private javax.swing.JButton bLimpiar;
+    private javax.swing.JButton bUtilizar;
+    private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonRegistrar;
+    private javax.swing.JButton botonSalir;
+    public javax.swing.JComboBox<String> buscador;
+    private javax.swing.JTextField cBuscar;
+    private javax.swing.JTextField cCantidad;
+    private javax.swing.JTextField cDescripcion;
+    private javax.swing.JTextField cId;
+    private javax.swing.JTextField cNombre;
+    private javax.swing.JTextField cPrecio;
+    public javax.swing.JComboBox<String> comboBuscar;
+    private javax.swing.JComboBox<String> comboMedida;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSlider jSlider1;
+    private javax.swing.JTable tablaInsumos;
+    // End of variables declaration//GEN-END:variables
+
+}
