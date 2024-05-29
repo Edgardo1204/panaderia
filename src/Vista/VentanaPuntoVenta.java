@@ -111,10 +111,10 @@ public class VentanaPuntoVenta extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(236, 226, 198));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1068, 532));
 
-        botonSalir.setBackground(new java.awt.Color(112, 80, 48));
+        botonSalir.setBackground(new java.awt.Color(255, 102, 0));
         botonSalir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         botonSalir.setForeground(new java.awt.Color(255, 255, 255));
         botonSalir.setText("Salir");
@@ -146,7 +146,7 @@ public class VentanaPuntoVenta extends javax.swing.JFrame {
         tablaUsuarios.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(tablaUsuarios);
 
-        bVender.setBackground(new java.awt.Color(112, 80, 48));
+        bVender.setBackground(new java.awt.Color(255, 102, 0));
         bVender.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bVender.setForeground(new java.awt.Color(255, 255, 255));
         bVender.setText("Vender");
@@ -240,7 +240,7 @@ public class VentanaPuntoVenta extends javax.swing.JFrame {
             }
         });
 
-        bLimpiar.setBackground(new java.awt.Color(112, 80, 48));
+        bLimpiar.setBackground(new java.awt.Color(255, 102, 0));
         bLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         bLimpiar.setText("Limpiar");
@@ -299,7 +299,7 @@ public class VentanaPuntoVenta extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel10.setText("Cantidad a vender:");
 
-        jButton1.setBackground(new java.awt.Color(112, 80, 48));
+        jButton1.setBackground(new java.awt.Color(255, 102, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Nueva Factura");

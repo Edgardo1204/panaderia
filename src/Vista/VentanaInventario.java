@@ -104,10 +104,10 @@ public class VentanaInventario extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(236, 226, 198));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1068, 532));
 
-        botonSalir.setBackground(new java.awt.Color(112, 80, 48));
+        botonSalir.setBackground(new java.awt.Color(255, 102, 0));
         botonSalir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         botonSalir.setForeground(new java.awt.Color(255, 255, 255));
         botonSalir.setText("Salir");
@@ -137,7 +137,7 @@ public class VentanaInventario extends javax.swing.JFrame {
         tablaUsuarios.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(tablaUsuarios);
 
-        bEliminar.setBackground(new java.awt.Color(112, 80, 48));
+        bEliminar.setBackground(new java.awt.Color(255, 102, 0));
         bEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bEliminar.setForeground(new java.awt.Color(255, 255, 255));
         bEliminar.setText("Eliminar");
@@ -147,7 +147,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             }
         });
 
-        bRegistrar.setBackground(new java.awt.Color(112, 80, 48));
+        bRegistrar.setBackground(new java.awt.Color(255, 102, 0));
         bRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         bRegistrar.setText("Registrar");
@@ -238,7 +238,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             }
         });
 
-        bLimpiar.setBackground(new java.awt.Color(112, 80, 48));
+        bLimpiar.setBackground(new java.awt.Color(255, 102, 0));
         bLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         bLimpiar.setText("Limpiar");
@@ -266,7 +266,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             }
         });
 
-        bActualizar1.setBackground(new java.awt.Color(112, 80, 48));
+        bActualizar1.setBackground(new java.awt.Color(255, 102, 0));
         bActualizar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bActualizar1.setForeground(new java.awt.Color(255, 255, 255));
         bActualizar1.setText("Actualizar");
@@ -276,7 +276,7 @@ public class VentanaInventario extends javax.swing.JFrame {
             }
         });
 
-        bBuscar.setBackground(new java.awt.Color(112, 80, 48));
+        bBuscar.setBackground(new java.awt.Color(255, 102, 0));
         bBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         bBuscar.setForeground(new java.awt.Color(255, 255, 255));
         bBuscar.setText("Buscar");

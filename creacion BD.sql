@@ -1,4 +1,38 @@
 use panaderia;
+
+CREATE TABLE `proveedor` (
+  `id_proveedor` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `numero_tele` varchar(50) NOT NULL,
+  `correo` varchar(79) NOT NULL,
+  PRIMARY KEY (`id_proveedor`)
+);
+
+CREATE TABLE `usuario` (
+  `cusuario` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido_paterno` varchar(50) NOT NULL,
+  `apellido_materno` varchar(50) DEFAULT NULL,
+  `contrasena` varchar(40) NOT NULL,
+  `rcontrasena` varchar(40) NOT NULL,
+  `correo_electronico` varchar(50) NOT NULL,
+  `tipo_usuario` varchar(25) NOT NULL,
+  PRIMARY KEY (`cusuario`)
+);
+
+CREATE TABLE `venta` (
+  `id_venta` int NOT NULL AUTO_INCREMENT,
+  `cusuario` varchar(50) DEFAULT NULL,
+  `nombre_producto` varchar(70) DEFAULT NULL,
+  `cantidad` int DEFAULT NULL,
+  `precio` float DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `forma_pago` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_venta`),
+  KEY `venta_ibfk_1` (`cusuario`),
+  CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`cusuario`) REFERENCES `usuario` (`cusuario`)
+);
 CREATE TABLE `compra` (
   `id_compra` int NOT NULL AUTO_INCREMENT,
   `id_proveedor` int DEFAULT NULL,
@@ -42,37 +76,3 @@ CREATE TABLE `producto` (
   KEY `id_venta` (`id_venta`),
   CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `venta` (`id_venta`)
 );
-
-CREATE TABLE `proveedor` (
-  `id_proveedor` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) NOT NULL,
-  `direccion` varchar(100) NOT NULL,
-  `numero_tele` varchar(50) NOT NULL,
-  `correo` varchar(79) NOT NULL,
-  PRIMARY KEY (`id_proveedor`)
-);
-
-CREATE TABLE `usuario` (
-  `cusuario` varchar(50) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `apellido_paterno` varchar(50) NOT NULL,
-  `apellido_materno` varchar(50) DEFAULT NULL,
-  `contrasena` varchar(40) NOT NULL,
-  `rcontrasena` varchar(40) NOT NULL,
-  `correo_electronico` varchar(50) NOT NULL,
-  `tipo_usuario` varchar(25) NOT NULL,
-  PRIMARY KEY (`cusuario`)
-);
-
-CREATE TABLE `venta` (
-  `id_venta` int NOT NULL AUTO_INCREMENT,
-  `cusuario` varchar(50) DEFAULT NULL,
-  `nombre_producto` varchar(70) DEFAULT NULL,
-  `cantidad` int DEFAULT NULL,
-  `precio` float DEFAULT NULL,
-  `fecha` date DEFAULT NULL,
-  `forma_pago` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_venta`),
-  KEY `venta_ibfk_1` (`cusuario`),
-  CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`cusuario`) REFERENCES `usuario` (`cusuario`)
-)

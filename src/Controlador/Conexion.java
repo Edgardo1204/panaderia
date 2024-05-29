@@ -20,7 +20,7 @@ public class Conexion {
 
     public static final String url = "jdbc:mysql://127.0.0.1:3306/panaderia?useTimezone=true&serverTimezone=UTC";
     public static final String usuario = "root";
-    public static final String contrasena = "";
+    public static final String contrasena = "kira2002";
 
     public static Connection getConnection() {
         Connection conexion = null;
